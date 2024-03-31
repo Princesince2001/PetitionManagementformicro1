@@ -64,6 +64,27 @@ namespace PetitionManagementSystem.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("PetitionManagementSystem.Models.PentitionPetitionHandler", b =>
+                {
+                    b.Property<int>("PentitionPetitionHandlerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PetitionHandlerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PetitionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PentitionPetitionHandlerId");
+
+                    b.HasIndex("PetitionHandlerId");
+
+                    b.HasIndex("PetitionId");
+
+                    b.ToTable("pentitionPetitionHandlers");
+                });
+
             modelBuilder.Entity("PetitionManagementSystem.Models.Petition", b =>
                 {
                     b.Property<int>("PetitionId")
@@ -79,10 +100,14 @@ namespace PetitionManagementSystem.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("PetitionDescription")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PetitionStatus")
+                    b.Property<string>("StatusType")
                         .HasColumnType("longtext");
 
                     b.Property<string>("TalukLocation")
@@ -182,7 +207,7 @@ namespace PetitionManagementSystem.Migrations
             modelBuilder.Entity("PetitionManagementSystem.Models.Category", b =>
                 {
                     b.HasOne("PetitionManagementSystem.Models.Admin", "Admin")
-                        .WithMany("Category")
+                        .WithMany()
                         .HasForeignKey("AdminId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -190,16 +215,35 @@ namespace PetitionManagementSystem.Migrations
                     b.Navigation("Admin");
                 });
 
+            modelBuilder.Entity("PetitionManagementSystem.Models.PentitionPetitionHandler", b =>
+                {
+                    b.HasOne("PetitionManagementSystem.Models.PetitionHandler", "PetitionHandler")
+                        .WithMany()
+                        .HasForeignKey("PetitionHandlerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetitionManagementSystem.Models.Petition", "Petition")
+                        .WithMany()
+                        .HasForeignKey("PetitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Petition");
+
+                    b.Navigation("PetitionHandler");
+                });
+
             modelBuilder.Entity("PetitionManagementSystem.Models.Petition", b =>
                 {
                     b.HasOne("PetitionManagementSystem.Models.Category", "Category")
-                        .WithMany("Petition")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PetitionManagementSystem.Models.User", "User")
-                        .WithMany("Petition")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -212,13 +256,13 @@ namespace PetitionManagementSystem.Migrations
             modelBuilder.Entity("PetitionManagementSystem.Models.PetitionHandler", b =>
                 {
                     b.HasOne("PetitionManagementSystem.Models.Admin", "Admin")
-                        .WithMany("PetitionHandler")
+                        .WithMany()
                         .HasForeignKey("AdminId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PetitionManagementSystem.Models.Category", "Category")
-                        .WithMany("PetitionHandler")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -226,25 +270,6 @@ namespace PetitionManagementSystem.Migrations
                     b.Navigation("Admin");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("PetitionManagementSystem.Models.Admin", b =>
-                {
-                    b.Navigation("Category");
-
-                    b.Navigation("PetitionHandler");
-                });
-
-            modelBuilder.Entity("PetitionManagementSystem.Models.Category", b =>
-                {
-                    b.Navigation("Petition");
-
-                    b.Navigation("PetitionHandler");
-                });
-
-            modelBuilder.Entity("PetitionManagementSystem.Models.User", b =>
-                {
-                    b.Navigation("Petition");
                 });
 #pragma warning restore 612, 618
         }

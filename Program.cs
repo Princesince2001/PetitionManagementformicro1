@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using PetitionManagementSystem.Connection;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,6 +35,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles(new StaticFileOptions
+
+                   {
+
+                       FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.WebRootPath, "images")),
+
+                       RequestPath = "/wwwroot/images"
+
+                   });
+
 
 app.UseHttpsRedirection();
 

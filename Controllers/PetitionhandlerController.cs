@@ -10,7 +10,8 @@ using PetitionManagementSystem.Dummy;
 using Microsoft.Extensions.Hosting;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
+
+using Org.BouncyCastle.Tls;
 
 
 namespace PetitionManagementSystem.Controllers
@@ -22,6 +23,9 @@ namespace PetitionManagementSystem.Controllers
     {
 
         private readonly PetitionManagementDBContext context;
+
+        //public PetitionStatus StatusType { get; private set; }
+
         public PetitionhandlerController(PetitionManagementDBContext context)
         {
             this.context = context;
@@ -35,6 +39,7 @@ namespace PetitionManagementSystem.Controllers
             Category category = context.Category.Find(petition.CategoryId);
 
             Admin admin = context.Admin.Find(petition.AdminId);
+            //PetitionStatus petitionStatus = context.PetitionStatus.Find(int.Parse(petition.StatusType));
 
             PetitionHandler petition1 = new PetitionHandler()
             {
@@ -42,16 +47,17 @@ namespace PetitionManagementSystem.Controllers
                 PetitionHandlerId = petition.PetitionHandlerId, // model name
                 OfficialId = petition.OfficialId,
                 UserName = petition.UserName,
-                Email = petition.TalukLocation,
-                MobileNumber = petition.MobileNumber,
+                Email = petition.Email,
+                MobileNumber = petition.MobileNumber, //changed
+                Password = petition.Password, //changed
+                
+                       
                 TalukLocation = petition.TalukLocation,
                 Status = 1,
                 Category = category,
                 Admin = admin,
-
-
+                //PetitionStatus = petitionStatus,
             };
-
             context.PetitionHandlers.Add(petition1); //table
             await context.SaveChangesAsync();
             return Ok();
@@ -61,7 +67,8 @@ namespace PetitionManagementSystem.Controllers
         [HttpGet]
         public async Task<IEnumerable<PetitionHandler>> Get()
         {
-            return context.PetitionHandlers.ToList();
+            
+            return context.PetitionHandlers.Include(x=>x.Category).Where(x=>x.Status==1).ToList();
         }
 
         [Route("api/FetchPetitionhandlersdetails/{id}")]

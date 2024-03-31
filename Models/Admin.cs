@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net.PeerToPeer.Collaboration;
 namespace PetitionManagementSystem.Models
 {
     public class Admin
@@ -19,9 +20,13 @@ namespace PetitionManagementSystem.Models
         [Required]
         public string? Password { get; set; }
 
-        public ICollection<Category> Category { get; } = new List<Category>();
 
-    public ICollection<PetitionHandler> PetitionHandler { get;  } = new List<PetitionHandler>();
+        
+
+
+       // public ICollection<Category> Category { get; } = new List<Category>();
+
+   // public ICollection<PetitionHandler> PetitionHandler { get;  } = new List<PetitionHandler>();
 
     }
 }

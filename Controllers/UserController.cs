@@ -43,11 +43,12 @@ namespace PetitionManagementSystem.Controllers
                 if (context.Admin.Any(s => s.Email == emp.Email))
                 {
                     var admin = context.Admin.FirstOrDefault(s => s.Email == emp.Email);
+
                     if (admin != null && admin.Password == emp.Password)
                     {
-                        return Ok("{\"emailstatus\":true,\"passwordstatus\":true,\"Role\":\"Admin\"}");
+                        return Ok("{\"emailstatus\":true,\"passwordstatus\":true,\"Role\":\"Admin\",\"Id\":\""+ admin.AdminId+"\"}");
                     }
-                    return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"Admin\"}");
+                    return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"Admin\",\"Id\":null}");
                 }
 
                 if (context.PetitionHandlers.Any(s => s.Email == emp.Email))
@@ -55,26 +56,26 @@ namespace PetitionManagementSystem.Controllers
                     var petitionHandler = context.PetitionHandlers.FirstOrDefault(s => s.Email == emp.Email);
                     if (petitionHandler != null && petitionHandler.Password == emp.Password)
                     {
-                        return Ok("{\"emailstatus\":true,\"passwordstatus\":true,\"Role\":\"PetitionHandler\"}");
+                        return Ok("{\"emailstatus\":true,\"passwordstatus\":true,\"Role\":\"PetitionHandler\",\"Id\":\""+petitionHandler.PetitionHandlerId+"\"}");
                     }
-                    return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"PetitionHandler\"}");
+                    return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"PetitionHandler\",\"Id\":null}");
                 }
 
                 if (context.User.Any(s => s.Email == emp.Email))
                 {
                     var user = context.User.FirstOrDefault(s => s.Email == emp.Email);
-                    if (user != null && user.Password == emp.Password)
+                    if (user.Password == emp.Password)
                     {
-                       return Ok("{\"emailstatus\":\"true\",\"passwordstatus\":true\",\"Role\":\"User\"}");
+                       return Ok("{\"emailstatus\":true,\"passwordstatus\":true,\"Role\":\"User\",\"Id\":\""+user.UserId+"\"}");
                     }
-                    return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"User\"}");
+                    return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"User\",\"Id\":null}");
                 }
 
-                return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"User\"}");
+                return Ok("{\"emailstatus\":true,\"passwordstatus\":false,\"Role\":\"User\",\"Id\":null}");
             }
             else
             {
-                return Ok("{\"emailstatus\":false,\"passwordstatus\":false}");
+                return Ok("{\"emailstatus\":false,\"passwordstatus\":false,\"Id\":null}");
             }
         }
 

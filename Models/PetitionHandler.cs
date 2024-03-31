@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PetitionManagementSystem.Controllers;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -18,10 +19,14 @@ namespace PetitionManagementSystem.Models
         public string? TalukLocation { get; set; }
 
         public int Status { get; set; }
-        [JsonIgnore]
+  
         public Category Category { get; set; }
-        [JsonIgnore]
+
         public Admin Admin { get; set; }
+        //public ICollection<PentitionPetitionHandler> Handler { get; set; }
+
+        // public ICollection<Petition> Petitions { get; }
+
 
     }
 }

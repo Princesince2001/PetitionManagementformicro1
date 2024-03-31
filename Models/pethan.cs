@@ -15,15 +15,20 @@ namespace PetitionManagementSystem.Models
 
         public string? Email { get; set; }
 
+        public int CategoryId { get; set; }
+
         public string? MobileNumber { get; set; }
 
+        public string Password { get; set; }     //changed
+
         public string? TalukLocation { get; set; }
+        public int AdminId { get; set; }
 
       
 
-        public int CategoryId { get; set; }
+       // public string CategoryName { get; set; }
 
-        public int AdminId { get; set; }
+        //public string StatusType { get; set; }
 
 
     }

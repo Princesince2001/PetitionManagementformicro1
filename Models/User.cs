@@ -22,7 +22,11 @@ namespace PetitionManagementSystem.Models
 
         public string Password { get; set; }
 
-        public ICollection<Petition> Petition { get; } = new List<Petition>();
+
+
+        //public List<Petition> Petitions { get;  }
+
+        //public ICollection<Petition> Petition { get; } = new List<Petition>();
 
 
     }

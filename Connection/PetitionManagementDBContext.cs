@@ -14,7 +14,7 @@ namespace PetitionManagementSystem.Connection
         public DbSet<Petition> Petition { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<PetitionHandler> PetitionHandlers { get; set; }
-
+        public DbSet<PentitionPetitionHandler> pentitionPetitionHandlers { get; set; }
      
     }
 }
